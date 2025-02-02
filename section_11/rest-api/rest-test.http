@@ -1,0 +1,41 @@
+@apiurl = http://localhost:8080
+
+### GET all events
+GET {{apiurl}}/events HTTP/1.1
+
+### GET event by id
+GET {{apiurl}}/events/1 HTTP/1.1
+
+### POST create event
+POST {{apiurl}}/events HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "New Event",
+    "description": "Movie Night",
+    "location": "Some Theater",
+    "datetime": "2026-01-02T19:00:00.00Z"
+}
+
+### PUT update event
+PUT {{apiurl}}/events/4 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Updated Event",
+    "description": "Really?",
+    "location": "Don't Know",
+    "datetime": "2026-01-05T10:00:00.00Z"
+}
+
+### DELETE event
+DELETE {{apiurl}}/events/3 HTTP/1.1
+
+### POST create user
+POST {{apiurl}}/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "iwannarock"
+}
