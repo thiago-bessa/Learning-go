@@ -9,29 +9,32 @@ GET {{apiurl}}/events/1 HTTP/1.1
 ### POST create event
 POST {{apiurl}}/events HTTP/1.1
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHBpcmF0aW9uIjoxNzM4NTE5MTQzLCJ1c2VySWQiOjJ9.44vQVKVSK_EPv6hPflOsewU1SSbWdPeaTM-ZgGH8JVI
 
 {
-    "name": "New Event",
-    "description": "Movie Night",
-    "location": "Some Theater",
+    "name": "Event 4",
+    "description": "Movie Night 4",
+    "location": "CinePlus",
     "datetime": "2026-01-02T19:00:00.00Z"
 }
 
 ### PUT update event
 PUT {{apiurl}}/events/4 HTTP/1.1
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwaXJhdGlvbiI6MTczODUyMDIxOCwidXNlcklkIjoxfQ.575UviPw2E1hhv1lyUnR9Dpn4QmsqkHBQ_pLLyeFLho
 
 {
-    "name": "Updated Event",
-    "description": "Really?",
-    "location": "Don't Know",
-    "datetime": "2026-01-05T10:00:00.00Z"
+    "Name": "Event 4",
+    "Description": "Movie Night 4",
+    "Location": "CineShow",
+    "DateTime": "2026-01-02T19:00:00Z"
 }
 
 ### DELETE event
-DELETE {{apiurl}}/events/3 HTTP/1.1
+DELETE {{apiurl}}/events/5 HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHBpcmF0aW9uIjoxNzM4NTE5MTQzLCJ1c2VySWQiOjJ9.44vQVKVSK_EPv6hPflOsewU1SSbWdPeaTM-ZgGH8JVI
 
-### POST create user
+### POST create admin user
 POST {{apiurl}}/signup HTTP/1.1
 Content-Type: application/json
 
@@ -39,3 +42,38 @@ Content-Type: application/json
     "email": "admin@example.com",
     "password": "iwannarock"
 }
+
+### POST login admin user
+POST {{apiurl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "iwannarock"
+}
+
+### POST create test user
+POST {{apiurl}}/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "test"
+}
+
+### POST login test user
+POST {{apiurl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "test"
+}
+
+### POST register test user in event 1
+POST {{apiurl}}/events/1/register HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHBpcmF0aW9uIjoxNzM4NTIxMjQ4LCJ1c2VySWQiOjJ9.WCRiFcqEVPKKD1h7bsnPy5ZhsVsbTL9FlMYRi4sfpws
+
+### DELETE cancel test user registration in event 1
+DELETE {{apiurl}}/events/1/register HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHBpcmF0aW9uIjoxNzM4NTIxMjQ4LCJ1c2VySWQiOjJ9.WCRiFcqEVPKKD1h7bsnPy5ZhsVsbTL9FlMYRi4sfpws

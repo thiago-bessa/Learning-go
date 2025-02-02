@@ -12,7 +12,7 @@ type Event struct {
 	Description string    `binding:"required"`
 	Location    string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
-	UserID      int
+	UserId      int64
 }
 
 func (event *Event) Save() error {
@@ -25,7 +25,7 @@ func (event *Event) Save() error {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(event.Name, event.Description, event.Location, event.DateTime, event.UserID)
+	result, err := stmt.Exec(event.Name, event.Description, event.Location, event.DateTime, event.UserId)
 
 	if err != nil {
 		return err
@@ -76,7 +76,7 @@ func GetEventById(id int64) (*Event, error) {
 	row := database.Database.QueryRow(query, id)
 
 	var event Event
-	err := row.Scan(&event.Id, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+	err := row.Scan(&event.Id, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserId)
 
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func GetAllEvents() ([]Event, error) {
 
 	for rows.Next() {
 		var event Event
-		err := rows.Scan(&event.Id, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+		err := rows.Scan(&event.Id, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserId)
 
 		if err != nil {
 			return nil, err
@@ -109,4 +109,34 @@ func GetAllEvents() ([]Event, error) {
 	}
 
 	return events, nil
+}
+
+func (event Event) Register(userId int64) error {
+	query := "INSERT INTO registrations(event_id, user_id) VALUES (?, ?)"
+	stmt, err := database.Database.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(event.Id, userId)
+
+	return err
+}
+
+func (event Event) CancelRegistration(userId int64) error {
+	query := "DELETE FROM registrations WHERE event_id = ? AND user_id = ?"
+	stmt, err := database.Database.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(event.Id, userId)
+
+	return err
 }
